@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web.Data.Entities
+namespace Web.ViewModels
 {
-    public class Usuarios
+    public class UsuariosViewModel
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage ="El campo es obligatorio")]
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public DateTime Fecha_Nacimiento { get; set; }

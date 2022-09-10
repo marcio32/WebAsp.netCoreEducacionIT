@@ -18,5 +18,13 @@ namespace Api.Controllers
             var buscarUsuarios = new UsuariosService();
             return await buscarUsuarios.BuscarListaAsync();
         }
+
+        [HttpPost("GuardarUsuario", Name = "GuardarUsuario")]
+        public async Task<List<Usuarios>> GuardarUsuario(Usuarios usuarios)
+        {
+            var buscarUsuarios = new UsuariosService();
+            return await buscarUsuarios.GuardarAsync(usuarios);
+        }
     }
+
 }

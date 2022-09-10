@@ -1,4 +1,5 @@
 ﻿using Api.Interfaces;
+using Microsoft.AspNetCore.Components;
 using Web.Data.Entities;
 using Web.Data.Managers;
 
@@ -24,6 +25,19 @@ namespace Api.Services
                 return resultado;
             }
             catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<Usuarios>> GuardarAsync(Usuarios usuario)
+        {
+            try
+            {
+                var resultado = await _manager.Guardar(usuario, true);
+                return null;
+            }
+            catch (Exception ex)
             {
                 return null;
             }

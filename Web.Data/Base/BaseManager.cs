@@ -32,5 +32,19 @@ namespace Web.Data.Base
         public abstract Task<bool> Delete();
         #endregion
 
+
+        #region Metodos Publicos
+        public async Task<bool> Guardar (T modelo, bool nuevo)
+        {
+            if (nuevo)
+            {
+                contextoSingleton.Entry<T>(modelo).State = EntityState.Added;
+            }
+
+            var result = await contextoSingleton.SaveChangesAsync() > 0;
+
+            return result;
+        }
+        #endregion
     }
 }
