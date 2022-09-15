@@ -29,17 +29,15 @@ namespace Web.Data.Base
         #region  Metodos Abstractos
         public abstract Task<List<T>> BuscarListaAsync();
         public abstract Task<T> BuscarUno();
-        public abstract Task<bool> Delete();
+        public abstract Task<bool> Eliminar(T modelo);
         #endregion
 
 
         #region Metodos Publicos
-        public async Task<bool> Guardar (T modelo, bool nuevo)
+        public async Task<bool> Guardar (T modelo)
         {
-            if (nuevo)
-            {
-                contextoSingleton.Entry<T>(modelo).State = EntityState.Added;
-            }
+           
+            contextoSingleton.Entry<T>(modelo).State = EntityState.Added;
 
             var result = await contextoSingleton.SaveChangesAsync() > 0;
 

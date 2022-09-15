@@ -19,6 +19,8 @@ namespace Web.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            optionsBuilder.EnableSensitiveDataLogging();
             optionsBuilder.UseSqlServer(ConnectionString);
         }
 

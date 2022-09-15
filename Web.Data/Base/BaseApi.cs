@@ -9,18 +9,31 @@ using System.Threading.Tasks;
 
 namespace Web.Data.Base
 {
-    public class BaseApi
+    public class BaseApi : ControllerBase
     {
+        private readonly IHttpClientFactory _httpClient;
+
+        public BaseApi(IHttpClientFactory httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
         public async Task<IActionResult> PostToApi(string ControllerName, object model)
         {
             try
             {
-                //var client = _httpClient.CreateClient();
+                var client = _httpClient.CreateClient("useApi");
 
-                //var response = await client.PostAsJsonAsync(ControllerName, model);
+                var response = await client.PostAsJsonAsync(ControllerName, model);
 
-                return null;
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var content = await response.Content.ReadAsStringAsync();
+                    return Ok(content);
+                }
+
+                return Unauthorized();
             }
             catch (Exception ex)
             {

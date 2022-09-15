@@ -13,7 +13,7 @@ namespace Web.Data.Managers
     {
         public async override Task<List<Usuarios>> BuscarListaAsync()
         {
-            var respuesta = await contextoSingleton.Usuarios.ToListAsync();
+            var respuesta = await contextoSingleton.Usuarios.Where(x=> x.Activo == true).ToListAsync();
             return respuesta;
         }
 
@@ -22,9 +22,13 @@ namespace Web.Data.Managers
             throw new NotImplementedException();
         }
 
-        public override Task<bool> Delete()
+        public async override Task<bool> Eliminar(Usuarios usuarios)
         {
-            throw new NotImplementedException();
+            contextoSingleton.Entry<Usuarios>(usuarios).State = EntityState.Modified;
+
+            var respuesta = await contextoSingleton.SaveChangesAsync() > 0;
+
+            return respuesta;
         }
     }
 }

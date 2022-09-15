@@ -34,8 +34,21 @@ namespace Api.Services
         {
             try
             {
-                var resultado = await _manager.Guardar(usuario, true);
+                var resultado = await _manager.Guardar(usuario);
+                return await _manager.BuscarListaAsync();
+            }
+            catch (Exception ex)
+            {
                 return null;
+            }
+        }
+
+        public async Task<List<Usuarios>> EliminarAsync(Usuarios usuario)
+        {
+            try
+            {
+                var resultado = await _manager.Eliminar(usuario);
+                return await _manager.BuscarListaAsync();
             }
             catch (Exception ex)
             {

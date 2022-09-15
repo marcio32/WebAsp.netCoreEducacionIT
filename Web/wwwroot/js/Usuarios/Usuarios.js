@@ -1,5 +1,6 @@
-﻿$(document).ready(function () {
-    $('#usuarios').DataTable({
+﻿var tablaUsuarios;
+$(document).ready(function () {
+   tablaUsuarios = $('#usuarios').DataTable({
         ajax: {
             url: 'https://localhost:7215/api/Usuarios/BuscarUsuarios',
             dataSrc: ""
@@ -38,7 +39,39 @@
     });
 });
 
-$('#abrirModal').on('click', function () {
-    $('#usuariosModal').modal('show');
-});
+//$('#abrirModal').on('click', function () {
+//    $('#usuariosModal').modal('show');
+//});
+
+function GuardarUsuario(row) {
+    $("#usuariosAddPartial").html("");
+    debugger
+    $.ajax({
+        type: "POST",
+        url: "/Usuarios/UsuariosAddPartial",
+        data: "",
+        contentType: "application/json",
+        dataType: "html",
+        success: function (resultado) {
+            debugger
+            $("#usuariosAddPartial").html(resultado);
+            $('#usuariosModal').modal('show');
+        }
+    })
+}
+
+
+function EliminarUsuario(row) {
+    debugger
+    $.ajax({
+        type: "POST",
+        url: "/Usuarios/EliminarUsuario",
+        data: JSON.stringify(row),
+        contentType: "application/json",
+        dataType: "html",
+        success: function () {
+            tablaUsuarios.ajax.reload();
+        }
+    })
+}
 

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Web.Data.Entities;
 
 namespace Web.ViewModels
 {
@@ -15,5 +16,19 @@ namespace Web.ViewModels
         public bool Activo { get; set; }
         public string Clave { get; set; }
         public int? Codigo { get; set; }
+
+        public static implicit operator UsuariosViewModel(Usuarios v)
+        {
+            var usuarioViewModel = new UsuariosViewModel();
+            usuarioViewModel.Id = v.Id;
+            usuarioViewModel.Nombre = v.Nombre;
+            usuarioViewModel.Apellido = v.Apellido;
+            usuarioViewModel.Mail = v.Mail;
+            usuarioViewModel.Activo = v.Activo;
+            usuarioViewModel.Clave = v.Clave;
+            usuarioViewModel.Id_Rol = v.Id_Rol;
+            usuarioViewModel.Fecha_Nacimiento = v.Fecha_Nacimiento;
+            return usuarioViewModel;
+        }
     }
 }

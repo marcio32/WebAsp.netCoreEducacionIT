@@ -12,18 +12,28 @@ namespace Api.Controllers
     public class UsuariosController : Controller
     {
 
-        [HttpGet("BuscarUsuarios", Name = "BuscarUsuarios")]
+        [HttpGet]
+        [Route("BuscarUsuarios")]
         public async Task<List<Usuarios>> BuscarUsuarios()
         {
             var buscarUsuarios = new UsuariosService();
             return await buscarUsuarios.BuscarListaAsync();
         }
 
-        [HttpPost("GuardarUsuario", Name = "GuardarUsuario")]
+        [HttpPost]
+        [Route("GuardarUsuario")]
         public async Task<List<Usuarios>> GuardarUsuario(Usuarios usuarios)
         {
             var buscarUsuarios = new UsuariosService();
             return await buscarUsuarios.GuardarAsync(usuarios);
+        }
+
+        [HttpPost]
+        [Route("EliminarUsuario")]
+        public async Task<List<Usuarios>> EliminarUsuario(Usuarios usuarios)
+        {
+            var buscarUsuarios = new UsuariosService();
+            return await buscarUsuarios.EliminarAsync(usuarios);
         }
     }
 

@@ -1,6 +1,10 @@
 ﻿@model Web.ViewModels.UsuariosViewModel
 
-@Html.HiddenFor(x=> x.Id)
+@{
+    List<SelectListItem> listItemsRoles = new List<SelectListItem>();
+    listItemsRoles.Add(new SelectListItem { Text = "Administrador", Value = "1" });
+    listItemsRoles.Add(new SelectListItem { Text = "Cliente", Value = "2" });
+}
 <div class="modal fade" id="usuariosModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered ">
     <div class="modal-content">
@@ -11,6 +15,7 @@
       <div class="modal-body">
                 @using (Html.BeginForm("GuardarUsuario", "Usuarios", FormMethod.Post))
                 {
+                    @Html.HiddenFor(x=> x.Id)
                  <div class="row">
                      <div class="col-md-6 mb-3">
                          <label class="col-md-3 form-control-label">Nombre</label>
@@ -39,14 +44,36 @@
                             @Html.EditorFor(x=> x.Mail, new { htmlAttributes= new {@class= "col-md-9 form-control"}})
                              </div>
                              <div class="col-md-6 mb-3">
+                             <label class="col-md-3 form-control-label">Rol</label>
+                             <select name="Id_Rol" id="Id_Rol" class="col-md-6 form-control">
+                                 <option value="">Selecciona...</option>
+                            @{
+                                foreach (var item in listItemsRoles)
+                                {
+                                    if(Model.Id_Rol != null){
+                                        item.Selected = true;
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                    else{
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                }
+                                 }
+
+                              </select>
+                              </div>
+                    </div>
+                          
+                    <div class="row">
+                             <div class="col-md-6 mb-3">
                                   <label class="col-md-3 form-control-label">Activo</label>
                             @Html.CheckBoxFor(x=> x.Activo, new { htmlAttributes= new {@class= "col-md-9 form-control"}})
                              </div>
-                         </div>
+                    </div>
                  
                       <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                       </div>
                      
                      }
