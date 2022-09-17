@@ -15,7 +15,7 @@ $(document).ready(function () {
                 }, title: 'Fecha de Nacimiento'
             },
             { data: 'mail', title: 'Mail' },
-            { data: 'id_Rol', title: 'Id del Rol'},
+            { data: 'roles.nombre', title: 'Rol'},
             {
                 data: function (row) {
                     return row.activo == true ? "Si" : "No"
@@ -39,10 +39,6 @@ $(document).ready(function () {
     });
 });
 
-//$('#abrirModal').on('click', function () {
-//    $('#usuariosModal').modal('show');
-//});
-
 function GuardarUsuario(row) {
     $("#usuariosAddPartial").html("");
     debugger
@@ -60,6 +56,19 @@ function GuardarUsuario(row) {
     })
 }
 
+function EditarUsuario(row) {
+    $.ajax({
+        type: "POST", 
+        url: "/Usuarios/UsuariosAddPartial",
+        data: JSON.stringify(row),
+        contentType: "application/json",
+        dataType: "html",
+        success: function (resultado) {
+            $("#usuariosAddPartial").html(resultado);
+            $('#usuariosModal').modal('show');
+        }
+    })
+}
 
 function EliminarUsuario(row) {
     debugger

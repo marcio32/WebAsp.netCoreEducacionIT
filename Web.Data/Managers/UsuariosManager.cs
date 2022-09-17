@@ -13,7 +13,7 @@ namespace Web.Data.Managers
     {
         public async override Task<List<Usuarios>> BuscarListaAsync()
         {
-            var respuesta = await contextoSingleton.Usuarios.Where(x=> x.Activo == true).ToListAsync();
+            var respuesta = await contextoSingleton.Usuarios.Where(x=> x.Activo == true).Include(x=> x.Roles).ToListAsync();
             return respuesta;
         }
 
@@ -27,6 +27,7 @@ namespace Web.Data.Managers
             contextoSingleton.Entry<Usuarios>(usuarios).State = EntityState.Modified;
 
             var respuesta = await contextoSingleton.SaveChangesAsync() > 0;
+            contextoSingleton.Entry<Usuarios>(usuarios).State = EntityState.Detached;
 
             return respuesta;
         }

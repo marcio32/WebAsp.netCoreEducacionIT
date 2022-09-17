@@ -17,7 +17,8 @@ namespace Api.Controllers
         public async Task<List<Usuarios>> BuscarUsuarios()
         {
             var buscarUsuarios = new UsuariosService();
-            return await buscarUsuarios.BuscarListaAsync();
+            var p = await buscarUsuarios.BuscarListaAsync();
+            return p;
         }
 
         [HttpPost]

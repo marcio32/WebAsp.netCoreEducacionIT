@@ -32,6 +32,15 @@ namespace Web.Controllers
             return PartialView("~/Views/Usuarios/Partial/usuariosAddPartial.cshtml", usuarioViewModel);
         }
 
+        public async Task<IActionResult> EditarUsuario(Usuarios usuario)
+        {
+            var baseApi = new BaseApi(_httpClient);
+            var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario);
+
+            return await Task.Run(() => View("~/Views/Usuarios/usuarios.cshtml"));
+
+        }
+
         public async Task<IActionResult> GuardarUsuario(Usuarios usuario)
         {
             var baseApi = new BaseApi(_httpClient);

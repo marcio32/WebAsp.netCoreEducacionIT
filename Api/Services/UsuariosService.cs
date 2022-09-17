@@ -34,7 +34,7 @@ namespace Api.Services
         {
             try
             {
-                var resultado = await _manager.Guardar(usuario);
+                var resultado = await _manager.Guardar(usuario, usuario.Id);
                 return await _manager.BuscarListaAsync();
             }
             catch (Exception ex)

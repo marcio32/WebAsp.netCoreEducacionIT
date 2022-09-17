@@ -11,16 +11,17 @@ namespace Web.Data.Base
     {
 
         #region Singleton Contexto
-            protected static ApplicationDbContext _context;
+        protected static ApplicationDbContext _context;
 
 
-        public static ApplicationDbContext contextoSingleton 
-        { get 
-            { 
-                if(_context == null)
+        public static ApplicationDbContext contextoSingleton
+        {
+            get
+            {
+                if (_context == null)
                     _context = new ApplicationDbContext();
                 return _context;
-            } 
+            }
         }
 
         #endregion
@@ -34,12 +35,16 @@ namespace Web.Data.Base
 
 
         #region Metodos Publicos
-        public async Task<bool> Guardar (T modelo)
+        public async Task<bool> Guardar(T modelo, int id)
         {
-           
-            contextoSingleton.Entry<T>(modelo).State = EntityState.Added;
+            if (id == 0)
+                contextoSingleton.Entry<T>(modelo).State = EntityState.Added;
+
+            else
+                contextoSingleton.Entry<T>(modelo).State = EntityState.Modified;
 
             var result = await contextoSingleton.SaveChangesAsync() > 0;
+            contextoSingleton.Entry<T>(modelo).State = EntityState.Detached;
 
             return result;
         }

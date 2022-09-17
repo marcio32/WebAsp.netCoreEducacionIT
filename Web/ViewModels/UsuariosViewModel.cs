@@ -16,6 +16,7 @@ namespace Web.ViewModels
         public bool Activo { get; set; }
         public string Clave { get; set; }
         public int? Codigo { get; set; }
+        public Roles? Roles { get; set; }
 
         public static implicit operator UsuariosViewModel(Usuarios v)
         {
