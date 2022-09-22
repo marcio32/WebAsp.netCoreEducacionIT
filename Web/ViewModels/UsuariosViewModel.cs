@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 using Web.Data.Entities;
 
 namespace Web.ViewModels
@@ -17,6 +18,7 @@ namespace Web.ViewModels
         public string Clave { get; set; }
         public int? Codigo { get; set; }
         public Roles? Roles { get; set; }
+        public IEnumerable<SelectListItem> Lista_Roles { get; set; }
 
         public static implicit operator UsuariosViewModel(Usuarios v)
         {

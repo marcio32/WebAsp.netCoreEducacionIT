@@ -1,11 +1,6 @@
 ﻿@model Web.ViewModels.UsuariosViewModel
 
-@{
-    List<SelectListItem> listItemsRoles = new List<SelectListItem>();
-    listItemsRoles.Add(new SelectListItem { Text = "Administrador", Value = "1" });
-    listItemsRoles.Add(new SelectListItem { Text = "Cliente", Value = "2" });
-    listItemsRoles.Add(new SelectListItem { Text = "Usuario", Value = "1002" });
-}
+
 <div class="modal fade" id="usuariosModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -60,7 +55,7 @@
                                             <select name="Id_Rol" id="Id_Rol" required class="col-md-9 form-control">
                                         <option value="">Selecciona...</option>
                                 @{
-                                    foreach (var item in listItemsRoles)
+                                    foreach (var item in Model.Lista_Roles)
                                     {
                                         if (Model.Id_Rol != null && item.Value == Model.Id_Rol.ToString())
                                         {

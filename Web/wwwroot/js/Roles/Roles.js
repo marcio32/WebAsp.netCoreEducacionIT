@@ -1,6 +1,6 @@
 ﻿var tablaRoles;
 $(document).ready(function () {
-    tablaRoles = $('#rols').DataTable({
+    tablaRoles = $('#roles').DataTable({
         ajax: {
             url: 'https://localhost:7215/api/Roles/BuscarRoles',
             dataSrc: ""
@@ -72,6 +72,7 @@ function EliminarRol(row) {
         contentType: "application/json",
         dataType: "html",
         success: function () {
+            debugger
             tablaRoles.ajax.reload();
         }
     })
