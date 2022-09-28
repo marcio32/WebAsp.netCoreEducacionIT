@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -15,5 +16,7 @@ namespace Web.Data.Entities
         public int Stock { get; set; }
         public string Imagen { get; set; }
         public bool Activo { get; set; }
+        [NotMapped]
+        public IFormFile? Imagen_Archivo { get; set; }
     }
 }

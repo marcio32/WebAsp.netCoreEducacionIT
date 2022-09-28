@@ -23,11 +23,64 @@ namespace Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ProductosAddPartial([FromBody] Usuarios producto)
+        public async Task<IActionResult> ProductosAddPartial([FromBody] Productos producto)
         {
             var productoViewModel = new ProductosViewModel();
 
+            if(producto != null)
+            {
+                productoViewModel = producto;
+            }
+
             return PartialView("~/Views/Productos/Partial/productosAddPartial.cshtml", productoViewModel);
+        }
+
+        public async Task<IActionResult> EditarProducto(Productos producto)
+        {
+            var baseApi = new BaseApi(_httpClient);
+            if (producto.Imagen_Archivo != null && producto.Imagen_Archivo.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    producto.Imagen_Archivo.CopyTo(ms);
+                    var imagenBytes = ms.ToArray();
+                    producto.Imagen = Convert.ToBase64String(imagenBytes);
+                }
+            }
+            producto.Imagen_Archivo = null;
+            var productos = await baseApi.PostToApi("Productos/GuardarProducto", producto);
+
+            return await Task.Run(() => View("~/Views/Productos/productos.cshtml"));
+
+        }
+
+        public async Task<IActionResult> GuardarProducto(Productos producto)
+        {
+            var baseApi = new BaseApi(_httpClient);
+            if(producto.Imagen_Archivo != null && producto.Imagen_Archivo.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    producto.Imagen_Archivo.CopyTo(ms);
+                    var imagenBytes = ms.ToArray();
+                    producto.Imagen = Convert.ToBase64String(imagenBytes);
+                }
+            }
+            producto.Imagen_Archivo = null;
+            var productos = await baseApi.PostToApi("Productos/GuardarProducto", producto);
+
+            return await Task.Run(() => View("~/Views/Productos/productos.cshtml"));
+
+        }
+
+        public async Task<IActionResult> EliminarProducto([FromBody] Productos productos)
+        {
+            productos.Activo = false;
+            var baseApi = new BaseApi(_httpClient);
+            var usuarios = await baseApi.PostToApi("Productos/EliminarProducto", productos);
+
+            return await Task.Run(() => View("~/Views/Productos/productos.cshtml"));
+
         }
 
     }

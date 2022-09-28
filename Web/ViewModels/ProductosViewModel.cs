@@ -21,6 +21,7 @@ namespace Web.ViewModels
             productoViewModel.Descripcion = v.Descripcion;
             productoViewModel.Precio = v.Precio;
             productoViewModel.Stock = v.Stock;
+            productoViewModel.Imagen = v.Imagen;
             productoViewModel.Activo = v.Activo;
             return productoViewModel;
         }

@@ -14,9 +14,10 @@
                     else
                         ActionName = "EditarProducto";
                 }
-                @using (Html.BeginForm(ActionName, "Productos", FormMethod.Post))
+                @using (Html.BeginForm(ActionName, "Productos", FormMethod.Post, new { enctype = "multipart/form-data"}))
                 {
                     @Html.HiddenFor(x=> x.Id)
+                    @Html.HiddenFor(x=> x.Imagen)
 
                             <div class="row">
                                  <div class="col-md-6 mt-1 mb-3">

@@ -7,15 +7,18 @@ $(document).ready(function () {
         },
         columns: [
             { data: 'id', title: 'Id' },
-            { data: 'nombre', title: 'Nombre' },
-            { data: 'apellido', title: 'Apellido' },
             {
-                data: function (row) {
-                    return moment(row.fecha_Nacimiento).format("DD/MM/YYYY");
-                }, title: 'Fecha de Nacimiento'
-            },
-            { data: 'mail', title: 'Mail' },
-            { data: 'roles.nombre', title: 'Rol'},
+                data: 'imagen', render: function (data) {
+                    debugger
+                    if (data != "") {
+                        return '<img src="data:image/jpeg;base64,' + data + '"width="100px" height="100px">';
+                    } else {
+                        return "No tiene IMG"
+                    }
+                    
+                } ,title: 'Imagen' },
+            { data: 'precio', title: 'Precio' },
+            { data: 'stock', title: 'Stock' },
             {
                 data: function (row) {
                     return row.activo == true ? "Si" : "No"
