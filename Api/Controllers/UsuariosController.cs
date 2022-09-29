@@ -6,7 +6,7 @@ using Web.Data.Entities;
 namespace Api.Controllers
 {
 
-    [AllowAnonymous]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UsuariosController : Controller

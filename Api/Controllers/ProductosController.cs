@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Web.Data.Entities;
 
 
-[AllowAnonymous]
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class ProductosController : Controller

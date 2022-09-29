@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Commons.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 using Web.Data;
 using Web.Data.Entities;
 
@@ -9,7 +15,7 @@ namespace Api.Controllers
     [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
-    public class AuthenticateController : Controller
+    public class AuthenticateController : ControllerBase
     {
 
         private readonly IConfiguration _configuration;
@@ -22,24 +28,58 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public IActionResult Login([FromBody] Login login)
+        public async Task<IActionResult> Login([FromBody] Login login)
         {
             try
             {
                 var usuario = contextInstance.Usuarios.Where(x => x.Mail == login.Mail && x.Clave == login.Clave).Include(x => x.Roles).FirstOrDefault();
                 if(usuario != null)
                 {
-                    return Ok(usuario.Mail);
+                    var Claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Email, usuario.Mail),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    };
+
+                    Claims.Add(new Claim(ClaimTypes.Role, usuario.Roles.Nombre));
+
+                    var token = CrearToken(Claims);
+
+                    return Ok(new JwtSecurityTokenHandler().WriteToken(token).ToString());
                 }
                 else
                 {
                     return Unauthorized();
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                await GenerateLogHelper.LogError(ex, "AuthenticateController", "Login");
                 return null;
             }
         }
+
+        private JwtSecurityToken CrearToken(List<Claim> autenticar)
+        {
+            try
+            {
+                var firma = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secreta"]));
+
+                var token = new JwtSecurityToken(
+                    expires: DateTime.Now.AddHours(24),
+                    claims: autenticar,
+                    signingCredentials: new SigningCredentials(firma, SecurityAlgorithms.HmacSha256)
+                    );
+                return token;
+            }
+            catch (Exception ex)
+            {
+                GenerateLogHelper.LogError(ex, "AuthenticateController", "CrearToken");
+                return null;
+            }
+            
+        }
+
+
     }
 }

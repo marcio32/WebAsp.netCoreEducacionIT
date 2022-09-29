@@ -1,4 +1,5 @@
 ﻿using Api.Interfaces;
+using Commons.Helpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Web.Data.Entities;
@@ -25,6 +26,7 @@ public class RolesService : IRolesService
         }
         catch (Exception ex)
         {
+            await GenerateLogHelper.LogError(ex, "RolesService", "BuscarListaASync");
             return null;
         }
     }
@@ -38,6 +40,7 @@ public class RolesService : IRolesService
         }
         catch (Exception ex)
         {
+            await GenerateLogHelper.LogError(ex, "RolesService", "GuardarAsync");
             return null;
         }
     }
@@ -51,6 +54,7 @@ public class RolesService : IRolesService
         }
         catch (Exception ex)
         {
+            await GenerateLogHelper.LogError(ex, "RolesService", "EliminarAsync");
             return null;
         }
     }

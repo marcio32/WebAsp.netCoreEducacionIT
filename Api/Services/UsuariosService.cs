@@ -1,5 +1,7 @@
 ﻿using Api.Interfaces;
+using Commons.Helpers;
 using Microsoft.AspNetCore.Components;
+using Microsoft.IdentityModel.Logging;
 using Web.Data.Entities;
 using Web.Data.Managers;
 
@@ -26,6 +28,7 @@ namespace Api.Services
             }
             catch(Exception ex)
             {
+                await GenerateLogHelper.LogError(ex, "UsuariosService", "BuscarListaASync");
                 return null;
             }
         }
@@ -39,6 +42,7 @@ namespace Api.Services
             }
             catch (Exception ex)
             {
+                await GenerateLogHelper.LogError(ex, "UsuariosService", "GuardarAsync");
                 return null;
             }
         }
@@ -52,6 +56,7 @@ namespace Api.Services
             }
             catch (Exception ex)
             {
+                await GenerateLogHelper.LogError(ex, "UsuariosService", "EliminarAsync");
                 return null;
             }
         }

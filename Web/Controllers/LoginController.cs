@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Web.Data.Base;
 using Web.Data.Entities;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -23,7 +24,9 @@ namespace Web.Controllers
 
             if(resultadoLogin != null)
             {
-                return View("~/Views/Home/Index.cshtml");
+                var inicioViewModel = new InicioViewModel();
+                inicioViewModel.Token = resultadoLogin.Value.ToString();
+                return View("~/Views/Home/Index.cshtml", inicioViewModel);
             }
             else
             {

@@ -1,4 +1,5 @@
 ﻿using Api.Interfaces;
+using Commons.Helpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Identity;
 using Web.Data.Entities;
@@ -25,6 +26,7 @@ public class ProductosService : IProductosService
         }
         catch (Exception ex)
         {
+            await GenerateLogHelper.LogError(ex, "ProductosServce", "BuscarListaAsync");
             return null;
         }
     }
@@ -38,6 +40,7 @@ public class ProductosService : IProductosService
         }
         catch (Exception ex)
         {
+            await GenerateLogHelper.LogError(ex, "ProductosServce", "GuardarAsync");
             return null;
         }
     }
@@ -51,6 +54,7 @@ public class ProductosService : IProductosService
         }
         catch (Exception ex)
         {
+            await GenerateLogHelper.LogError(ex, "ProductosServce", "EliminarAsync");
             return null;
         }
     }

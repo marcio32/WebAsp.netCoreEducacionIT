@@ -55,6 +55,7 @@
                                             <select name="Id_Rol" id="Id_Rol" required class="col-md-9 form-control">
                                         <option value="">Selecciona...</option>
                                 @{
+                                    //ARREGLAR CUANDO SE INTENTA AGREAGAR UN ROL NUEVO
                                     foreach (var item in Model.Lista_Roles)
                                     {
                                         if (Model.Id_Rol != null && item.Value == Model.Id_Rol.ToString())
