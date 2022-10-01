@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Runtime.InteropServices;
 using Web.Data.Base;
 using Web.Data.Entities;
+using Web.Filters;
 using Web.ViewModels;
 
 namespace Web.Controllers
@@ -18,6 +19,8 @@ namespace Web.Controllers
             _httpClient = httpClientFactory;
 
 
+
+        [AuthorizeUsers]
         public IActionResult Usuarios()
         {
             return View();

@@ -1,9 +1,12 @@
 ﻿var tablaRoles;
+var token;
 $(document).ready(function () {
+    token = getCookie('Token');
     tablaRoles = $('#roles').DataTable({
         ajax: {
             url: 'https://localhost:7215/api/Roles/BuscarRoles',
-            dataSrc: ""
+            dataSrc: "",
+            headers: { "Authorization": "Bearer " + token }
         },
         columns: [
             { data: 'id', title: 'Id' },
@@ -41,6 +44,7 @@ function GuardarRol(row) {
         data: "",
         contentType: "application/json",
         dataType: "html",
+        headers: { "Authorization": "Bearer " + token },
         success: function (resultado) {
             debugger
             $("#rolesAddPartial").html(resultado);
@@ -56,6 +60,7 @@ function EditarRol(row) {
         data: JSON.stringify(row),
         contentType: "application/json",
         dataType: "html",
+        headers: { "Authorization": "Bearer " + token },
         success: function (resultado) {
             $("#rolesAddPartial").html(resultado);
             $('#rolesModal').modal('show');
@@ -71,6 +76,7 @@ function EliminarRol(row) {
         data: JSON.stringify(row),
         contentType: "application/json",
         dataType: "html",
+        headers: { "Authorization": "Bearer " + token },
         success: function () {
             debugger
             tablaRoles.ajax.reload();

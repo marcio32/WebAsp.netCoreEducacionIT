@@ -18,5 +18,6 @@ namespace Web.Data.Entities
         public bool Activo { get; set; }
         [NotMapped]
         public IFormFile? Imagen_Archivo { get; set; }
+
     }
 }

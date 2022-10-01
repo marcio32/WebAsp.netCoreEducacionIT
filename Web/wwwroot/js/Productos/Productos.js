@@ -1,9 +1,11 @@
 ﻿var tablaProductos;
 $(document).ready(function () {
+    var token = getCookie('Token');
    tablaProductos = $('#productos').DataTable({
         ajax: {
             url: 'https://localhost:7215/api/Productos/BuscarProductos',
-            dataSrc: ""
+           dataSrc: "",
+           headers: { "Authorization": "Bearer " + token }
         },
         columns: [
             { data: 'id', title: 'Id' },
@@ -51,6 +53,7 @@ function GuardarProducto(row) {
         data: "",
         contentType: "application/json",
         dataType: "html",
+        headers: { "Authorization": "Bearer " + token },
         success: function (resultado) {
             debugger
             $("#productosAddPartial").html(resultado);
@@ -66,6 +69,7 @@ function EditarProducto(row) {
         data: JSON.stringify(row),
         contentType: "application/json",
         dataType: "html",
+        headers: { "Authorization": "Bearer " + token },
         success: function (resultado) {
             $("#productosAddPartial").html(resultado);
             $('#productosModal').modal('show');
@@ -81,6 +85,7 @@ function EliminarProducto(row) {
         data: JSON.stringify(row),
         contentType: "application/json",
         dataType: "html",
+        headers: { "Authorization": "Bearer " + token },
         success: function () {
             tablaProductos.ajax.reload();
         }

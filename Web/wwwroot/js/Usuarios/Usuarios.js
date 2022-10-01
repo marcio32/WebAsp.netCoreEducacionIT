@@ -1,7 +1,8 @@
 ﻿var tablaUsuarios;
+var token;
 $(document).ready(function () {
     debugger
-    var token = getCookie('Token');
+    token = getCookie('Token');
    tablaUsuarios = $('#usuarios').DataTable({
         ajax: {
             url: 'https://localhost:7215/api/Usuarios/BuscarUsuarios',
@@ -51,6 +52,7 @@ function GuardarUsuario(row) {
         data: "",
         contentType: "application/json",
         dataType: "html",
+        headers: { "Authorization": "Bearer " + token },
         success: function (resultado) {
             debugger
             $("#usuariosAddPartial").html(resultado);
@@ -66,6 +68,7 @@ function EditarUsuario(row) {
         data: JSON.stringify(row),
         contentType: "application/json",
         dataType: "html",
+        headers: { "Authorization": "Bearer " + token },
         success: function (resultado) {
             $("#usuariosAddPartial").html(resultado);
             $('#usuariosModal').modal('show');
@@ -81,6 +84,7 @@ function EliminarUsuario(row) {
         data: JSON.stringify(row),
         contentType: "application/json",
         dataType: "html",
+        headers: { "Authorization": "Bearer " + token },
         success: function () {
             tablaUsuarios.ajax.reload();
         }

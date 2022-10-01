@@ -56,21 +56,24 @@
                                         <option value="">Selecciona...</option>
                                 @{
                                     //ARREGLAR CUANDO SE INTENTA AGREAGAR UN ROL NUEVO
-                                    foreach (var item in Model.Lista_Roles)
-                                    {
-                                        if (Model.Id_Rol != null && item.Value == Model.Id_Rol.ToString())
+                                   
+                                        foreach (var item in Model.Lista_Roles)
                                         {
-                                            item.Selected = true;
-                                                                            <option value=@item.Value selected>@item.Text</option>
+                                            if (Model.Id_Rol != null && item.Value == Model.Id_Rol.ToString())
+                                            {
+                                                item.Selected = true;
+                                                                                                <option value=@item.Value selected>@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                                                                <option value=@item.Value>@item.Text</option>
+                                            }
+
+
+
                                         }
-                                        else
-                                        {
-                                                                            <option value=@item.Value>@item.Text</option>
-                                        }
-
-
-
-                                    }
+                                  
+                                    
                                 }
                                     </select>
                                         </div>
