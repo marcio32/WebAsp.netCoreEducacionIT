@@ -29,34 +29,22 @@
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Tiene Una Cuenta?</h3>
-		      	<form action="Login/Ingresar" method="post" class="signin-form">
+		      	<h3 class="mb-4 text-center">Recuperar Cuenta</h3>
+				  <p>Para recuperar su cuenta por favor ingrese un Mail, y el codigo que recibio en su casilla de correo.<p/>
+				  <form action="CambiarClave" method="post" class="signin-form">
 		      		<div class="form-group">
 		      			<input type="text" name="Mail" class="form-control" placeholder="Mail" required>
 		      		</div>
-	            <div class="form-group">
-	              <input id="password-field" type="password" name="Clave" class="form-control" placeholder="Contraseña" required>
-	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-	            </div>
-	            <div class="form-group">
-	            	<button type="submit" class="form-control btn btn-primary submit px-3">Ingresar</button>
-	            </div>
-	            <div class="form-group d-md-flex">
-	            	<div class="w-50">
-		            	<label class="checkbox-wrap checkbox-primary">Recuerdame
-									  <input type="checkbox" checked>
-									  <span class="checkmark"></span>
-									</label>
-								</div>
-								<div class="w-50 text-md-right">
-									<a asp-controller="Login" asp-action="OlvidoClave" style="color: #fff">Olvido su contraseña</a>
-								</div>
-	            </div>
+					  <div class="form-group">
+						  <input type="text" name="Codigo" class="form-control" placeholder="Ingrese el codigo" required>
+					  </div>
+					  <div class="form-group">
+						  <input type="text" name="Clave" class="form-control" placeholder="Ingrese su neuva clave" required>
+					  </div>
+					<div class="form-group">
+	            		<button type="submit" class="form-control btn btn-primary submit px-3">Ingresar</button>
+					</div>
 	          </form>
-	          <p class="w-100 text-center">&mdash; Puedes Iniciar Con &mdash;</p>
-	          <div class="social d-flex text-center">
-	          	<a href="#" class="px-2 py-2 mr-md-1 rounded"><span class="ion-logo-google mr-2"></span> Google</a>
-	          </div>
 		      </div>
 				</div>
 			</div>

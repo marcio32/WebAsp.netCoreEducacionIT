@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using NuGet.Common;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using Web.Data.Base;
@@ -31,7 +32,8 @@ namespace Web.Controllers
         {
             var usuarioViewModel = new UsuariosViewModel();
             var baseApi = new BaseApi(_httpClient);
-            var roles = await baseApi.GetToApi("Roles/BuscarRoles");
+            var token = HttpContext.Session.GetString("Token");
+            var roles = await baseApi.GetToApi("Roles/BuscarRoles", token);
             var resultadoRoles = roles as OkObjectResult;
 
             if (usuario != null)
@@ -55,8 +57,9 @@ namespace Web.Controllers
 
         public async Task<IActionResult> EditarUsuario(Usuarios usuario)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
-            var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario);
+            var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario, token);
 
             return await Task.Run(() => View("~/Views/Usuarios/usuarios.cshtml"));
 
@@ -64,8 +67,9 @@ namespace Web.Controllers
 
         public async Task<IActionResult> GuardarUsuario(Usuarios usuario)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
-            var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario);
+            var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario, token);
 
             return await Task.Run(() => View("~/Views/Usuarios/usuarios.cshtml"));
 
@@ -73,9 +77,10 @@ namespace Web.Controllers
 
         public async Task<IActionResult> EliminarUsuario([FromBody] Usuarios usuario)
         {
+            var token = HttpContext.Session.GetString("Token");
             usuario.Activo = false;
             var baseApi = new BaseApi(_httpClient);
-            var usuarios = await baseApi.PostToApi("Usuarios/EliminarUsuario", usuario);
+            var usuarios = await baseApi.PostToApi("Usuarios/EliminarUsuario", usuario, token);
 
             return await Task.Run(() => View("~/Views/Usuarios/usuarios.cshtml"));
 

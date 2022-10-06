@@ -14,7 +14,17 @@ builder.Services.AddAuthentication(option =>
     option.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 }).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config =>
 {
-    config.AccessDeniedPath = "/Login/Login";
+    config.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        context.Response.Redirect("https://localhost:7291");
+        return Task.CompletedTask;
+    };
+});
+
+builder.Services.AddAuthorization(option =>
+{
+    option.AddPolicy("ADMINISTRADORES", policy => policy.RequireRole("Administrador"));
 });
 
 builder.Services.AddHttpClient("useApi", config =>
@@ -22,7 +32,7 @@ builder.Services.AddHttpClient("useApi", config =>
     config.BaseAddress = new Uri(builder.Configuration["ServiceUrl:ApiUrl"]);
 });
 
-
+builder.Services.AddSession();
 
 
 var app = builder.Build();
@@ -45,6 +55,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

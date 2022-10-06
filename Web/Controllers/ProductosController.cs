@@ -40,6 +40,7 @@ namespace Web.Controllers
         public async Task<IActionResult> EditarProducto(Productos producto)
         {
             var baseApi = new BaseApi(_httpClient);
+            var token = HttpContext.Session.GetString("Token");
             if (producto.Imagen_Archivo != null && producto.Imagen_Archivo.Length > 0)
             {
                 using (var ms = new MemoryStream())
@@ -50,7 +51,7 @@ namespace Web.Controllers
                 }
             }
             producto.Imagen_Archivo = null;
-            var productos = await baseApi.PostToApi("Productos/GuardarProducto", producto);
+            var productos = await baseApi.PostToApi("Productos/GuardarProducto", producto, token);
 
             return await Task.Run(() => View("~/Views/Productos/productos.cshtml"));
 
@@ -58,6 +59,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> GuardarProducto(Productos producto)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
             if(producto.Imagen_Archivo != null && producto.Imagen_Archivo.Length > 0)
             {
@@ -69,7 +71,7 @@ namespace Web.Controllers
                 }
             }
             producto.Imagen_Archivo = null;
-            var productos = await baseApi.PostToApi("Productos/GuardarProducto", producto);
+            var productos = await baseApi.PostToApi("Productos/GuardarProducto", producto, token);
 
             return await Task.Run(() => View("~/Views/Productos/productos.cshtml"));
 
@@ -77,9 +79,10 @@ namespace Web.Controllers
 
         public async Task<IActionResult> EliminarProducto([FromBody] Productos productos)
         {
+            var token = HttpContext.Session.GetString("Token");
             productos.Activo = false;
             var baseApi = new BaseApi(_httpClient);
-            var usuarios = await baseApi.PostToApi("Productos/EliminarProducto", productos);
+            var usuarios = await baseApi.PostToApi("Productos/EliminarProducto", productos,token);
 
             return await Task.Run(() => View("~/Views/Productos/productos.cshtml"));
 

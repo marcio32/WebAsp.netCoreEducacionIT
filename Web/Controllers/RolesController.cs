@@ -15,7 +15,7 @@ namespace Web.Controllers
             _httpClient = httpClientFactory;
 
 
-        [AuthorizeUsers]
+        [AuthorizeUsers (Policy = "ADMINISTRADORES")]
         public IActionResult Roles()
         {
             return View();
@@ -35,8 +35,9 @@ namespace Web.Controllers
 
         public async Task<IActionResult> EditarRol(Roles rol)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
-            var roles = await baseApi.PostToApi("Roles/GuardarRol", rol);
+            var roles = await baseApi.PostToApi("Roles/GuardarRol", rol, token);
 
             return await Task.Run(() => View("~/Views/Roles/roles.cshtml"));
 
@@ -44,8 +45,9 @@ namespace Web.Controllers
 
         public async Task<IActionResult> GuardarRol(Roles rol)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClient);
-            var roles = await baseApi.PostToApi("Roles/GuardarRol", rol);
+            var roles = await baseApi.PostToApi("Roles/GuardarRol", rol, token);
 
             return await Task.Run(() => View("~/Views/Roles/roles.cshtml"));
 
@@ -53,9 +55,10 @@ namespace Web.Controllers
 
         public async Task<IActionResult> EliminarRol([FromBody] Roles roles)
         {
+            var token = HttpContext.Session.GetString("Token");
             roles.Activo = false;
             var baseApi = new BaseApi(_httpClient);
-            var usuarios = await baseApi.PostToApi("Roles/EliminarRol", roles);
+            var usuarios = await baseApi.PostToApi("Roles/EliminarRol", roles,token);
 
             return await Task.Run(() => View("~/Views/Roles/roles.cshtml"));
 

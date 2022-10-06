@@ -11,6 +11,7 @@ namespace Web.Data.Entities
         public string? Mail { get; set; }
         public string? Clave { get; set; }
         public string? Token { get; set; }
+        public int Codigo { get; set; }
 
     }
 }

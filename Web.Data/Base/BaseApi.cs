@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace Web.Data.Base
 {
@@ -18,11 +19,16 @@ namespace Web.Data.Base
             _httpClient = httpClient;
         }
 
-        public async Task<IActionResult> PostToApi(string ControllerName, object model)
+        public async Task<IActionResult> PostToApi(string ControllerName, object model, string token)
         {
             try
             {
                 var client = _httpClient.CreateClient("useApi");
+
+                if(token != "")
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+                }
 
                 var response = await client.PostAsJsonAsync(ControllerName, model);
 
@@ -41,11 +47,16 @@ namespace Web.Data.Base
             }
         }
 
-        public async Task<IActionResult> GetToApi(string ControllerName)
+        public async Task<IActionResult> GetToApi(string ControllerName, string token)
         {
             try
             {
                 var client = _httpClient.CreateClient("useApi");
+
+                if (token != "")
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+                }
 
                 var response = await client.GetAsync(ControllerName);
 

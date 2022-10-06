@@ -45,7 +45,7 @@ namespace Api.Controllers
 
                     var token = CrearToken(Claims);
 
-                    return Ok(new JwtSecurityTokenHandler().WriteToken(token).ToString());
+                    return Ok(new JwtSecurityTokenHandler().WriteToken(token).ToString() + ";" + usuario.Nombre + ";" + usuario.Roles.Nombre + ";" + usuario.Mail);
                 }
                 else
                 {
