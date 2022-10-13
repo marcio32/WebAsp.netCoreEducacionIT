@@ -52,7 +52,7 @@ public class RecuperarCuentaController : Controller
             var usuario = contextInstance.Usuarios.Where(x => x.Mail == login.Mail && x.Codigo == login.Codigo).FirstOrDefault();
             if (usuario != null)
             {
-                usuario.Codigo = login.Codigo;
+                usuario.Codigo = null;
                 usuario.Clave = login.Clave;
                 return GuardarCodigo.GuardarCodigo(usuario);
             }

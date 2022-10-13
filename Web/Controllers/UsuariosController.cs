@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Commons.Helpers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using NuGet.Common;
@@ -38,6 +39,7 @@ namespace Web.Controllers
 
             if (usuario != null)
             {
+                usuario.Clave = EncryptHelper.Desencriptar(usuario.Clave);
                 usuarioViewModel = usuario;
             }
 
@@ -58,6 +60,7 @@ namespace Web.Controllers
         public async Task<IActionResult> EditarUsuario(Usuarios usuario)
         {
             var token = HttpContext.Session.GetString("Token");
+            usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
             var baseApi = new BaseApi(_httpClient);
             var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario, token);
 
@@ -68,6 +71,7 @@ namespace Web.Controllers
         public async Task<IActionResult> GuardarUsuario(Usuarios usuario)
         {
             var token = HttpContext.Session.GetString("Token");
+            usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
             var baseApi = new BaseApi(_httpClient);
             var usuarios = await baseApi.PostToApi("Usuarios/GuardarUsuario", usuario, token);
 

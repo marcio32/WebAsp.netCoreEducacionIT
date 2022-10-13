@@ -1,7 +1,7 @@
 ﻿var tablaRoles;
-var token;
+
 $(document).ready(function () {
-    token = getCookie('Token');
+    var token = getCookie('Token');
     tablaRoles = $('#roles').DataTable({
         ajax: {
             url: 'https://localhost:7215/api/Roles/BuscarRoles',
@@ -44,7 +44,6 @@ function GuardarRol(row) {
         data: "",
         contentType: "application/json",
         dataType: "html",
-        headers: { "Authorization": "Bearer " + token },
         success: function (resultado) {
             debugger
             $("#rolesAddPartial").html(resultado);
@@ -60,7 +59,6 @@ function EditarRol(row) {
         data: JSON.stringify(row),
         contentType: "application/json",
         dataType: "html",
-        headers: { "Authorization": "Bearer " + token },
         success: function (resultado) {
             $("#rolesAddPartial").html(resultado);
             $('#rolesModal').modal('show');
@@ -69,18 +67,33 @@ function EditarRol(row) {
 }
 
 function EliminarRol(row) {
-    debugger
-    $.ajax({
-        type: "POST",
-        url: "/Roles/EliminarRol",
-        data: JSON.stringify(row),
-        contentType: "application/json",
-        dataType: "html",
-        headers: { "Authorization": "Bearer " + token },
-        success: function () {
-            debugger
-            tablaRoles.ajax.reload();
+   
+    Swal.fire({
+        title: 'Estas Seguro?',
+        text: "Vas a eliminar un rol!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Eliminar!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Roles/EliminarRol",
+                data: JSON.stringify(row),
+                contentType: "application/json",
+                dataType: "html",
+                success: function () {
+                    Swal.fire(
+                        'Eliminado!'
+                    )
+                    tablaRoles.ajax.reload();
+                }
+            })
         }
     })
+  
 }
 

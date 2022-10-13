@@ -32,6 +32,7 @@ namespace Api.Controllers
         {
             try
             {
+                login.Clave = EncryptHelper.Encriptar(login.Clave);
                 var usuario = contextInstance.Usuarios.Where(x => x.Mail == login.Mail && x.Clave == login.Clave).Include(x => x.Roles).FirstOrDefault();
                 if(usuario != null)
                 {

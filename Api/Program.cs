@@ -3,6 +3,7 @@ using Api.Interfaces;
 using Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using Web.Data;
 
@@ -22,7 +23,38 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+   
+    c.AddSecurityDefinition("Bearer",
+    new OpenApiSecurityScheme
+    {
+        Description = "Autorizacion",
+        Name = "Autorizacion",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme="bearer"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+
+    });
+
+});
+
 builder.Services.AddScoped<IUsuariosService, UsuariosService>();
 ApplicationDbContext.ConnectionString = builder.Configuration.GetConnectionString("WebEducacionIT");
 

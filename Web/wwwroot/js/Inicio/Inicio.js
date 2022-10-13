@@ -1,4 +1,5 @@
 ﻿$(function () {
     debugger
-    setCookie("Token", $("#Token").val(), 1);
+    if ($("#Token").val() != "")
+        setCookie("Token", $("#Token").val(), 1);
 })

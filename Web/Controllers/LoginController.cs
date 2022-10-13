@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using Commons.Helpers;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -25,6 +26,8 @@ namespace Web.Controllers
           
         public IActionResult Login()
         {
+            if (TempData["ErrorLogin"] != null)
+                ViewBag.ErrorLogin = TempData["ErrorLogin"].ToString();
             return View();
         }
 
@@ -40,6 +43,7 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Ingresar(Login login)
         {
+            login.Clave = EncryptHelper.Encriptar(login.Clave);
             var baseApi = new BaseApi(_httpClient);
             var token = await baseApi.PostToApi("Authenticate/Login", login, "");
             var resultadoLogin = token as OkObjectResult;
@@ -72,6 +76,7 @@ namespace Web.Controllers
             }
             else
             {
+                TempData["ErrorLogin"] = "La contraseña o el mail no coinciden";
                 return RedirectToAction("Login", "Login");
 
             }
@@ -94,8 +99,8 @@ namespace Web.Controllers
             login.Codigo = codigo;
 
             var baseApi = new BaseApi(_httpClient);
-            var token = await baseApi.PostToApi("RecuperarCuenta/GuardarCodigo", login, "");
-            var resultadoLogin = token as OkObjectResult;
+            var response = await baseApi.PostToApi("RecuperarCuenta/GuardarCodigo", login, "");
+            var resultadoLogin = response as OkObjectResult;
 
             if (resultadoLogin != null)
             {
@@ -119,6 +124,26 @@ namespace Web.Controllers
                 _smtpClient.Send(mail);
 
                 return RedirectToAction("RecuperarCuenta", "Login");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Login");
+
+            }
+
+        }
+
+        public async Task<IActionResult> CambiarClave(Login login)
+        {
+            login.Clave = EncryptHelper.Encriptar(login.Clave);
+            var baseApi = new BaseApi(_httpClient);
+            var response = await baseApi.PostToApi("RecuperarCuenta/CambiarClave", login, "");
+            var resultadoLogin = response as OkObjectResult;
+
+            if (resultadoLogin != null)
+            {
+
+                return RedirectToAction("Login", "Login");
             }
             else
             {

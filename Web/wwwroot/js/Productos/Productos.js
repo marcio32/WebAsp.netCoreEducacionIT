@@ -15,7 +15,7 @@ $(document).ready(function () {
                     if (data != "") {
                         return '<img src="data:image/jpeg;base64,' + data + '"width="100px" height="100px">';
                     } else {
-                        return "No tiene IMG"
+                        return '<img src="/images/sin-foto.png"width="100px" height="100px">';
                     }
                     
                 } ,title: 'Imagen' },
@@ -53,7 +53,6 @@ function GuardarProducto(row) {
         data: "",
         contentType: "application/json",
         dataType: "html",
-        headers: { "Authorization": "Bearer " + token },
         success: function (resultado) {
             debugger
             $("#productosAddPartial").html(resultado);
@@ -69,7 +68,6 @@ function EditarProducto(row) {
         data: JSON.stringify(row),
         contentType: "application/json",
         dataType: "html",
-        headers: { "Authorization": "Bearer " + token },
         success: function (resultado) {
             $("#productosAddPartial").html(resultado);
             $('#productosModal').modal('show');
@@ -78,17 +76,33 @@ function EditarProducto(row) {
 }
 
 function EliminarProducto(row) {
-    debugger
-    $.ajax({
-        type: "POST",
-        url: "/Productos/EliminarProducto",
-        data: JSON.stringify(row),
-        contentType: "application/json",
-        dataType: "html",
-        headers: { "Authorization": "Bearer " + token },
-        success: function () {
-            tablaProductos.ajax.reload();
+    Swal.fire({
+        title: 'Estas Seguro?',
+        text: "Vas a eliminar un producto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Eliminar!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: "/Productos/EliminarProducto",
+                data: JSON.stringify(row),
+                contentType: "application/json",
+                dataType: "html",
+                success: function () {
+                    Swal.fire(
+                        'Eliminado!'
+                    )
+                    tablaProductos.ajax.reload();
+                }
+            })
         }
     })
+
+    
 }
 
