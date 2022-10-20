@@ -37,7 +37,7 @@ $(document).ready(function () {
 
 function GuardarRol(row) {
     $("#rolesAddPartial").html("");
-    debugger
+    
     $.ajax({
         type: "POST",
         url: "/Roles/RolesAddPartial",
@@ -45,7 +45,7 @@ function GuardarRol(row) {
         contentType: "application/json",
         dataType: "html",
         success: function (resultado) {
-            debugger
+            
             $("#rolesAddPartial").html(resultado);
             $('#rolesModal').modal('show');
         }

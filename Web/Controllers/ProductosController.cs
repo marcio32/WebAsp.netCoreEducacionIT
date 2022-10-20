@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -19,7 +20,7 @@ namespace Web.Controllers
             _httpClient = httpClientFactory;
 
 
-        [AuthorizeUsers]
+        [Authorize]
         public IActionResult Productos()
         {
             return View();

@@ -32,9 +32,19 @@ namespace Api.Controllers
         {
             try
             {
+
                 login.Clave = EncryptHelper.Encriptar(login.Clave);
-                var usuario = contextInstance.Usuarios.Where(x => x.Mail == login.Mail && x.Clave == login.Clave).Include(x => x.Roles).FirstOrDefault();
-                if(usuario != null)
+                var usuario = new Usuarios();
+                if (login.Google == true)
+                {
+                    usuario = contextInstance.Usuarios.Where(x => x.Mail == login.Mail).Include(x => x.Roles).FirstOrDefault();
+                }
+                else
+                {
+                    usuario = contextInstance.Usuarios.Where(x => x.Mail == login.Mail && x.Clave == login.Clave).Include(x => x.Roles).FirstOrDefault();
+                }
+
+                if (usuario != null)
                 {
                     var Claims = new List<Claim>
                     {
@@ -53,7 +63,7 @@ namespace Api.Controllers
                     return Unauthorized();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await GenerateLogHelper.LogError(ex, "AuthenticateController", "Login");
                 return null;
@@ -78,7 +88,7 @@ namespace Api.Controllers
                 GenerateLogHelper.LogError(ex, "AuthenticateController", "CrearToken");
                 return null;
             }
-            
+
         }
 
 

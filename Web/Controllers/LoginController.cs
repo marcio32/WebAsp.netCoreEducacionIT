@@ -1,6 +1,7 @@
 ﻿using Commons.Helpers;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Mail;
@@ -23,7 +24,7 @@ namespace Web.Controllers
             _configuration = configuration;
             _smtpClient = new SmtpClient();
         }
-          
+
         public IActionResult Login()
         {
             if (TempData["ErrorLogin"] != null)
@@ -43,12 +44,11 @@ namespace Web.Controllers
 
         public async Task<IActionResult> Ingresar(Login login)
         {
-            login.Clave = EncryptHelper.Encriptar(login.Clave);
             var baseApi = new BaseApi(_httpClient);
             var token = await baseApi.PostToApi("Authenticate/Login", login, "");
             var resultadoLogin = token as OkObjectResult;
 
-            if(resultadoLogin != null)
+            if (resultadoLogin != null)
             {
                 var resultadoSplit = resultadoLogin.Value.ToString().Split(";");
                 ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
@@ -82,7 +82,7 @@ namespace Web.Controllers
             }
 
         }
-    
+
         public async Task<IActionResult> CerrarSesion()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -160,5 +160,54 @@ namespace Web.Controllers
             mensaje += $"{codigo} {separacion}";
             return mensaje;
         }
+
+        public async Task LoginGoogle()
+        {
+            await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
+            {
+
+                RedirectUri = Url.Action("GoogleResponse")
+            });
+        }
+
+        public async Task<IActionResult> GoogleResponse()
+        {
+
+            var resultado = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var claims = resultado.Principal.Identities.FirstOrDefault().Claims.Select(claim => new
+            {
+                claim.Value,
+                claim.Type,
+                claim.Issuer,
+                claim.OriginalIssuer
+            });
+            var login = new Login();
+            login.Mail = claims.ToList()[4].Value;
+            login.Google = true;
+
+
+            var baseApi = new BaseApi(_httpClient);
+            var token = await baseApi.PostToApi("Authenticate/Login", login, "");
+            var resultadoLogin = token as OkObjectResult;
+
+            if (resultadoLogin != null)
+            {
+                var resultadoSplit = resultadoLogin.Value.ToString().Split(";");
+
+                HttpContext.Session.SetString("Token", resultadoSplit[0]);
+
+                var inicioViewModel = new InicioViewModel();
+                inicioViewModel.Token = resultadoSplit[0];
+                return View("~/Views/Home/Index.cshtml", inicioViewModel);
+            }
+            else
+            {
+                TempData["ErrorLogin"] = "La contraseña o el mail no coinciden";
+                return RedirectToAction("Login", "Login");
+
+            }
+
+        }
+
     }
 }

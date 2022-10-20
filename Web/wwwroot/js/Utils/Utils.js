@@ -1,5 +1,5 @@
 ﻿function setCookie(nombre, valor, dias) {
-    debugger
+    
     var expiracion = "";
     if (dias) {
         var fecha = new Date();
@@ -10,7 +10,7 @@
 }
 
 function getCookie(nombre) {
-    debugger
+    
     var nombre = nombre + "="
     var arregloCookies = document.cookie.split(";");
     for (var i = 0; i < arregloCookies.length; i++) {

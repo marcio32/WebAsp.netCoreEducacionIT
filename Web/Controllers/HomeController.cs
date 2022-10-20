@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Web.Filters;
 using Web.Models;
@@ -14,7 +15,7 @@ namespace Web.Controllers
             _logger = logger;
         }
 
-        [AuthorizeUsers]
+        [Authorize]
         public IActionResult Index()
         {
             return View();

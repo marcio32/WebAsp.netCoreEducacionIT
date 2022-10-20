@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using Web.Data.Base;
 using Web.Data.Entities;
@@ -15,7 +16,8 @@ namespace Web.Controllers
             _httpClient = httpClientFactory;
 
 
-        [AuthorizeUsers (Policy = "ADMINISTRADORES")]
+ 
+        [Authorize]
         public IActionResult Roles()
         {
             return View();

@@ -1,9 +1,14 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddSignalR();
 builder.Services.AddControllersWithViews();
 
 
@@ -20,6 +25,11 @@ builder.Services.AddAuthentication(option =>
         context.Response.Redirect("https://localhost:7291");
         return Task.CompletedTask;
     };
+}).AddGoogle(GoogleDefaults.AuthenticationScheme, option =>
+{
+    option.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    option.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    option.ClaimActions.MapJsonKey("urn:google:picture", "picture", "url");
 });
 
 builder.Services.AddAuthorization(option =>
@@ -61,5 +71,7 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Login}/{id?}");
+
+app.MapHub<ChatHub>("/Chat");
 
 app.Run();

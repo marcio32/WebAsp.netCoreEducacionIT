@@ -1,0 +1,59 @@
+﻿@model int
+
+
+<div class="row justify-content-center">
+   <div class="mb-2">
+       <input class="form-control" type="text" placeholder="Introduzca su Usuario" id="usuario"/>
+       <input class="form-control" type="text" placeholder="Introduzca su Mensaje" id="mensaje"/>
+       <div>
+           <button id="btnEnviar" type="button" class="btn btn-success">Enviar</button> 
+       </div>
+   </div>
+</div>
+
+
+
+<div class="row justify-content-center">
+   <div class="col-10">
+      <ul class="list-group" id="Mensajes"> </ul>
+   </div>
+</div>
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+
+@section Scripts{
+        <script>
+            $(document).ready(function(){
+                debugger
+                var conexion = new signalR.HubConnectionBuilder().withUrl("/Chat").build();
+
+                conexion.start().then(() =>{
+                    conexion.invoke("AgregarAlGrupo", "@Model");
+                });
+
+                $("#btnEnviar").click(function(e){
+                    var room = @Model;
+                    var usuario = $("#usuario").val();
+                    var mensaje = $("#mensaje").val();
+
+                    conexion.invoke("EnviarMensaje", room, usuario, mensaje);
+                    
+                    $("#mensaje").val("");
+                    $("#mensaje").focus();
+
+                    e.preventDefault();
+
+                })
+
+                conexion.on("RecibirMensaje", (usuario, mensaje) =>{
+                    var li = $("<li>", {"class": "list-group-item"});
+                    var small = $("<small>", {"text": usuario + "  -  " });
+                    li.append(small);
+                    li.append(mensaje);
+
+                    $("#Mensajes").append(li);
+                });
+
+            });
+        </script>
+}

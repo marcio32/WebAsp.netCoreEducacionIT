@@ -1,5 +1,6 @@
 
 using Api.Interfaces;
+using Api.Middlewares;
 using Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -90,6 +91,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseCors(MyAllowSpecificOrigins);
+
+app.UseMiddleware<PruebaMiddleware>();
+
+app.Run(async context =>
+{
+    await context.Response.WriteAsync("Segunda linea");
+});
 
 app.MapControllers();
 

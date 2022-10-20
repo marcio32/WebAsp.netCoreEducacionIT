@@ -11,7 +11,7 @@ $(document).ready(function () {
             { data: 'id', title: 'Id' },
             {
                 data: 'imagen', render: function (data) {
-                    debugger
+                    
                     if (data != "") {
                         return '<img src="data:image/jpeg;base64,' + data + '"width="100px" height="100px">';
                     } else {
@@ -46,7 +46,7 @@ $(document).ready(function () {
 
 function GuardarProducto(row) {
     $("#productosAddPartial").html("");
-    debugger
+    
     $.ajax({
         type: "POST",
         url: "/Productos/ProductosAddPartial",
@@ -54,7 +54,7 @@ function GuardarProducto(row) {
         contentType: "application/json",
         dataType: "html",
         success: function (resultado) {
-            debugger
+            
             $("#productosAddPartial").html(resultado);
             $('#productosModal').modal('show');
         }

@@ -1,7 +1,7 @@
 ﻿/*! For license information please see app.js.LICENSE.txt */
 
 (function ($) {
-    debugger
+    
     var pathname = window.location.pathname,
         paginas = ['/Home/Index', '/Usuarios/Usuarios', '/Roles/Roles', '/Productos/Productos'];
     $('.sidebar-item').each(function (i) {

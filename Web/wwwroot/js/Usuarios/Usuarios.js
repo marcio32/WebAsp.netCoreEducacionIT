@@ -1,7 +1,7 @@
 ﻿var tablaUsuarios;
 
 $(document).ready(function () {
-    debugger
+    
     var token = getCookie('Token');
    tablaUsuarios = $('#usuarios').DataTable({
         ajax: {
@@ -52,7 +52,7 @@ function GuardarUsuario(row) {
         contentType: "application/json",
         dataType: "html",
         success: function (resultado) {
-            debugger
+            
             $("#usuariosAddPartial").html(resultado);
             $('#usuariosModal').modal('show');
         }
