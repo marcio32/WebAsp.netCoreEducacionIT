@@ -92,12 +92,8 @@ app.UseAuthorization();
 
 app.UseCors(MyAllowSpecificOrigins);
 
-app.UseMiddleware<PruebaMiddleware>();
+app.UseMiddleware<ExceptionMiddleware>();
 
-app.Run(async context =>
-{
-    await context.Response.WriteAsync("Segunda linea");
-});
 
 app.MapControllers();
 

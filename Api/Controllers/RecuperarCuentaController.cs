@@ -27,7 +27,6 @@ public class RecuperarCuentaController : Controller
         {
             var GuardarCodigo = new RecuperarCuentaService();
             var usuario = contextInstance.Usuarios.Where(x => x.Mail == login.Mail).FirstOrDefault();
-            if (usuario != null)
             {
                 usuario.Codigo = login.Codigo;
                 return GuardarCodigo.GuardarCodigo(usuario);
@@ -36,8 +35,7 @@ public class RecuperarCuentaController : Controller
         } 
         catch (Exception ex)
         {
-            GenerateLogHelper.LogError(ex, "RecuperarCuentaController", "GuardarCodigo");
-            return false;
+            throw ex;
         }
        
     }
@@ -60,8 +58,7 @@ public class RecuperarCuentaController : Controller
         }
         catch (Exception ex)
         {
-            GenerateLogHelper.LogError(ex, "RecuperarCuentaController", "GuardarCodigo");
-            return false;
+            throw ex;
         }
 
     }

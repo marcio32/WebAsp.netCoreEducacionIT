@@ -26,8 +26,7 @@ public class ServiciosService : IServiciosService
         }
         catch (Exception ex)
         {
-            await GenerateLogHelper.LogError(ex, "ServiciosService", "BuscarListaASync");
-            return null;
+            throw ex;
         }
     }
 
@@ -40,8 +39,7 @@ public class ServiciosService : IServiciosService
         }
         catch (Exception ex)
         {
-            await GenerateLogHelper.LogError(ex, "ServiciosService", "GuardarAsync");
-            return null;
+            throw ex;
         }
     }
 
@@ -54,8 +52,7 @@ public class ServiciosService : IServiciosService
         }
         catch (Exception ex)
         {
-            await GenerateLogHelper.LogError(ex, "ServiciosService", "EliminarAsync");
-            return null;
+            throw ex;
         }
     }
 }

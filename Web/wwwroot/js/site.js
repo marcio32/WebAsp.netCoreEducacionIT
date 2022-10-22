@@ -1,9 +1,9 @@
 ﻿/*! For license information please see app.js.LICENSE.txt */
 
 (function ($) {
-    
+    debugger
     var pathname = window.location.pathname,
-        paginas = ['/Home/Index', '/Usuarios/Usuarios', '/Roles/Roles', '/Productos/Productos'];
+        paginas = ['/Home/Index', '/Usuarios/Usuarios', '/Roles/Roles', '/Productos/Productos', '/Servicios/Servicios', '/Chat/Chat'];
     $('.sidebar-item').each(function (i) {
         if (pathname.includes(paginas[i])) $(this).addClass('active');
         else if (this.className.includes("active")) $(this).removeClass('active');

@@ -8,7 +8,6 @@ namespace Web.ViewModels
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage ="El campo es obligatorio")]
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public DateTime Fecha_Nacimiento { get; set; }

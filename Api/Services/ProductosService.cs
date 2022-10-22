@@ -26,8 +26,7 @@ public class ProductosService : IProductosService
         }
         catch (Exception ex)
         {
-            await GenerateLogHelper.LogError(ex, "ProductosServce", "BuscarListaAsync");
-            return null;
+            throw ex;
         }
     }
 
@@ -40,8 +39,7 @@ public class ProductosService : IProductosService
         }
         catch (Exception ex)
         {
-            await GenerateLogHelper.LogError(ex, "ProductosServce", "GuardarAsync");
-            return null;
+            throw ex;
         }
     }
 
@@ -54,8 +52,7 @@ public class ProductosService : IProductosService
         }
         catch (Exception ex)
         {
-            await GenerateLogHelper.LogError(ex, "ProductosServce", "EliminarAsync");
-            return null;
+            throw ex;
         }
     }
 }

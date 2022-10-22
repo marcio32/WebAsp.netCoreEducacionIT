@@ -26,6 +26,13 @@ namespace Api.Controllers
             _configuration = configuration;
         }
 
+        [HttpGet]
+        [Route("exception")]
+        public async Task<IActionResult> Exception()
+        {
+            throw new Exception("Error");
+        }
+
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] Login login)
@@ -65,8 +72,7 @@ namespace Api.Controllers
             }
             catch (Exception ex)
             {
-                await GenerateLogHelper.LogError(ex, "AuthenticateController", "Login");
-                return null;
+                throw ex;
             }
         }
 
@@ -85,8 +91,7 @@ namespace Api.Controllers
             }
             catch (Exception ex)
             {
-                GenerateLogHelper.LogError(ex, "AuthenticateController", "CrearToken");
-                return null;
+                throw ex;
             }
 
         }

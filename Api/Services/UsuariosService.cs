@@ -28,8 +28,7 @@ namespace Api.Services
             }
             catch(Exception ex)
             {
-                await GenerateLogHelper.LogError(ex, "UsuariosService", "BuscarListaASync");
-                return null;
+                throw ex;
             }
         }
 
@@ -42,8 +41,7 @@ namespace Api.Services
             }
             catch (Exception ex)
             {
-                await GenerateLogHelper.LogError(ex, "UsuariosService", "GuardarAsync");
-                return null;
+                throw ex;
             }
         }
 
@@ -56,8 +54,7 @@ namespace Api.Services
             }
             catch (Exception ex)
             {
-                await GenerateLogHelper.LogError(ex, "UsuariosService", "EliminarAsync");
-                return null;
+                throw ex;
             }
         }
     }

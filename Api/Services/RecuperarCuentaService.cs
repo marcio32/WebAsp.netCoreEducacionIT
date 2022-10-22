@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Web.Data.Entities;
 using Web.Data.Managers;
 
-public class RecuperarCuentaService
-{
+public class RecuperarCuentaService : IRecuperarCuentaServices { 
     public string MensajeDeError { get; set; }
     public bool Estado { get; set; }
 
@@ -26,8 +25,7 @@ public class RecuperarCuentaService
         }
         catch (Exception ex)
         {
-            GenerateLogHelper.LogError(ex, "RecuperarCuentaService", "GuardarCodigo");
-            return false;
+            throw ex;
         }
     }
 }

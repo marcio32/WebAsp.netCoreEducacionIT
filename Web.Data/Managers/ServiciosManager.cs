@@ -14,7 +14,7 @@ namespace Web.Data.Managers
     {
         public async override Task<List<Servicios>> BuscarListaAsync()
         {
-            var respuesta = contextoSingleton.Servicios.FromSqlRaw($"ObtenerServicios").ToList();
+            var respuesta = contextoSingleton.Servicios.FromSqlRaw("ObtenerServicios").ToList();
             return respuesta;
         }
 

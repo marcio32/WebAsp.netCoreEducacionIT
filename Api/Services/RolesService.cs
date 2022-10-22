@@ -26,8 +26,7 @@ public class RolesService : IRolesService
         }
         catch (Exception ex)
         {
-            await GenerateLogHelper.LogError(ex, "RolesService", "BuscarListaASync");
-            return null;
+            throw ex;
         }
     }
 
@@ -40,8 +39,7 @@ public class RolesService : IRolesService
         }
         catch (Exception ex)
         {
-            await GenerateLogHelper.LogError(ex, "RolesService", "GuardarAsync");
-            return null;
+            throw ex;
         }
     }
 
@@ -54,8 +52,7 @@ public class RolesService : IRolesService
         }
         catch (Exception ex)
         {
-            await GenerateLogHelper.LogError(ex, "RolesService", "EliminarAsync");
-            return null;
+            throw ex;
         }
     }
 }
