@@ -1,0 +1,12 @@
+﻿@model Web.ViewModels.InicioViewModel
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+@Html.HiddenFor(x=> x.Token)
+<div class="text-center">
+    <h1 class="display-4">Bienvenidos</h1>
+    <p>Al curso de ASP.NET Core.</p>
+</div>
+
+<script src="~/js/inicio/inicio.js"></script>
