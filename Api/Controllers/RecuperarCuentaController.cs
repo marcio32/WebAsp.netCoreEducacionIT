@@ -35,6 +35,7 @@ public class RecuperarCuentaController : Controller
         } 
         catch (Exception ex)
         {
+            throw ex;
         }
        
     }
