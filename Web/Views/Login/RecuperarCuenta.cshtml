@@ -1,0 +1,63 @@
+﻿
+@{
+    Layout = null;
+    ViewData["Title"] = "Login";
+}
+
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Educacion IT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link href="~/css/login/login.css" rel="stylesheet" />
+
+	</head>
+	<body class="img js-fullheight" style="background-image: url(/images/bg.jpg);">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Educacion IT</h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+		      	<h3 class="mb-4 text-center">Recuperar Cuenta</h3>
+				  <p>Para recuperar su cuenta por favor ingrese un Mail, y el codigo que recibio en su casilla de correo.<p/>
+				  <form action="CambiarClave" method="post" class="signin-form">
+		      		<div class="form-group">
+		      			<input type="text" name="Mail" class="form-control" placeholder="Mail" required>
+		      		</div>
+					  <div class="form-group">
+						  <input type="text" name="Codigo" class="form-control" placeholder="Ingrese el codigo" required>
+					  </div>
+					  <div class="form-group">
+						  <input type="text" name="Clave" class="form-control" placeholder="Ingrese su nueva clave" required>
+					  </div>
+					<div class="form-group">
+	            		<button type="submit" class="form-control btn btn-primary submit px-3">Ingresar</button>
+					</div>
+	          </form>
+		      </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+ <script src="/lib/jquery/dist/jquery.js"></script>
+  <script src="/js/lib/popper/dist/popper.js"></script>
+  <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/js/login/login.js"></script>
+
+	</body>
+</html>
+
+
+
